@@ -1,0 +1,8 @@
+export/*
+**.asd
+**/*.png\~
+**/*.json\~
+**/*.tmx\~
+**/*.kra\~
+**/*-autosave.kra
+**/*-go*-here.txt
