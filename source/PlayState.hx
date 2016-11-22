@@ -52,7 +52,7 @@ class PlayState extends FlxState
 		cameraBorder.updateHitbox();
 		
 		var hint: FlxText = new FlxText(650, 100, 550, 
-		"This is a camera demo.\n\nScroll mouse wheel to zoom.\n\nPress arrow keys to scroll camera.\n\nPress SPACE to reset values.",
+		"This is a camera demo.\n\nPress Q and E to zoom.\n\nPress arrow keys to scroll camera.\n\nPress SPACE to reset values.",
 		24
 		);
 		hint.color = FlxColor.BLACK;
@@ -110,8 +110,9 @@ class PlayState extends FlxState
 		//group1.cameras = [ gameCamera ];
 		//group2.cameras = [ uiCamera ];
 		
-		//gameCamera.scroll.y = 50;
-		//gameCamera.zoom = 0.7;
+		gameCamera.scroll.x = 200;
+		gameCamera.scroll.y = 500;
+		gameCamera.zoom = 0.375;
 		
 		gameCamera.bgColor = 0xff666666;
 		uiCamera.bgColor = FlxColor.TRANSPARENT;
@@ -135,23 +136,17 @@ class PlayState extends FlxState
 	{
 		super.update(elapsed);
 		
-		if (FlxG.mouse.wheel != 0)
+		var newZoom = gameCamera.zoom;
+		if (FlxG.keys.pressed.Q)
 		{
-			//trace("before: " + gameCamera.width);
-			
-			var newZoom = gameCamera.zoom + FlxG.mouse.wheel * 0.1;
-			gameCamera.zoom = (newZoom < 0.1) ? 0.1 : newZoom;
-				
-			//gameCamera.width = Math.floor(FlxG.stage.width * gameCamera.zoom);
-			//gameCamera.height = Math.floor(FlxG.stage.height * gameCamera.zoom);
-				
-			//trace("after: " + gameCamera.width);
-				
-			//gameCamera.width = FlxG.//Std.int(FlxG.stage.width);
-			//gameCamera.height = //Std.int(FlxG.stage.height);
-			
-			//gameCamera.updateScroll();
+			newZoom -= 1.5 * elapsed;
 		}
+		if (FlxG.keys.pressed.E)
+		{
+			newZoom += 1.5 * elapsed;
+		}
+		
+		gameCamera.zoom = (newZoom < 0.1) ? 0.1 : newZoom;
 		
 		var scrollSpeed = 2;
 		if (FlxG.mouse.justPressedMiddle)
@@ -185,7 +180,7 @@ class PlayState extends FlxState
 			gameCamera.scroll.set();
 		}
 		
-		var speed = 400;
+		var speed = 600;
 		if (FlxG.keys.pressed.UP)
 		{
 			gameCamera.scroll.y -= speed * elapsed;
